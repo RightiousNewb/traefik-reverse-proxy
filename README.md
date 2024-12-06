@@ -81,6 +81,22 @@ The Traefik service is configured with:
 - SSL certificate management
 - Cloudflare integration
 
+## Configuration Notes
+
+- **Important**: Before using this setup, make sure to change the email address in `traefik-config/config/traefik.yml` to your own email address. This email is used for Let's Encrypt SSL certificate notifications.
+
+## Why Traefik over Nginx?
+
+Traefik offers several advantages over Nginx:
+
+1. **Automatic Service Discovery**: Traefik automatically detects new services and creates routes without manual configuration.
+2. **Dynamic Configuration**: No need to reload the proxy when configuration changes.
+3. **Modern Dashboard**: Built-in web UI for monitoring and management.
+4. **Docker-First**: Native Docker integration with automatic container discovery.
+5. **Let's Encrypt Integration**: Built-in automatic SSL certificate management.
+6. **Middleware Support**: Easy to add headers, authentication, and other middleware.
+7. **Real-Time Configuration**: Changes take effect immediately without service interruption.
+
 ## Security Considerations
 
 - The `acme.json` file permissions are set to 600 to ensure only the owner can read/write
