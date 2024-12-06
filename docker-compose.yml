@@ -1,0 +1,34 @@
+version: '3.8'
+
+services:
+  web:
+    image: httpd:latest  # Your service
+    labels:
+      - "traefik.enable=true"
+      # HTTP - Forward to HTTPS
+      - "traefik.http.routers.frontend.entrypoints=http"
+      - "traefik.http.routers.frontend.rule=Host(`example.com`)"
+      - "traefik.http.middlewares.frontend-redirect.redirectscheme.scheme=https"
+      - "traefik.http.routers.frontend.middlewares=frontend-redirect"
+      
+      # HTTPS - Forward to service
+      - "traefik.http.routers.frontend-secure.entrypoints=https"
+      - "traefik.http.routers.frontend-secure.rule=Host(`example.com`)"
+      - "traefik.http.routers.frontend-secure.tls=true"
+      - "traefik.http.routers.frontend-secure.tls.certresolver=cloudflare"
+      - "traefik.http.services.frontend.loadbalancer.server.port=8000"
+      
+      # Headers
+      - "traefik.http.middlewares.secure-headers.headers.sslredirect=true"
+      - "traefik.http.middlewares.secure-headers.headers.stsSeconds=31536000"
+      - "traefik.http.middlewares.secure-headers.headers.forceSTSHeader=true"
+      - "traefik.http.routers.frontend-secure.middlewares=secure-headers"
+    networks:
+      - backend
+    ports:
+      - 8000:8000
+
+networks:
+  backend:
+    external: true
+    name: backend  # Use an existing Docker network named 'backend'
