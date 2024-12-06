@@ -54,15 +54,15 @@ traefik-reverse-proxy/
 
 4. Start the Traefik reverse proxy:
    ```bash
-   docker-compose -f traefik-config/docker-compose.yml up -d
-   docker-compose -f traefik-config/docker-compose.yml logs -f
+   docker compose -f traefik-config/docker-compose.yml up -d
+   docker compose -f traefik-config/docker-compose.yml logs -f
    ```
 
 
 5. Deploy your application:
    ```bash
-   docker-compose up -d
-   docker-compose logs -f
+   docker compose up -d
+   docker compose logs -f
    ```
 
 ## Configuration Details
